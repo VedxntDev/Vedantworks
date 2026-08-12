@@ -19,16 +19,14 @@ const ContributionCalendar: React.FC<ContributionCalendarProps> = ({ data, loadi
     return m;
   }, [data]);
 
-  // Generate 53 weeks, ending today, starting on Sunday
+  // 53 weeks ending today, aligned to Sunday
   const weeks = React.useMemo(() => {
     const list: string[][] = [];
     const today = new Date();
     const startDate = new Date(today);
     startDate.setDate(today.getDate() - 364);
-    // Align to Sunday
-    const startDay = startDate.getDay();
-    startDate.setDate(startDate.getDate() - startDay);
-    let cur = new Date(startDate);
+    startDate.setDate(startDate.getDate() - startDate.getDay()); // align to Sunday
+    const cur = new Date(startDate);
     for (let w = 0; w < 53; w++) {
       const week: string[] = [];
       for (let d = 0; d < 7; d++) {
@@ -40,7 +38,7 @@ const ContributionCalendar: React.FC<ContributionCalendarProps> = ({ data, loadi
     return list;
   }, []);
 
-  // Month labels: figure out which week column each month starts
+  // Month labels — one per unique month start
   const monthLabels = React.useMemo(() => {
     const labels: { label: string; col: number }[] = [];
     let lastMonth = -1;
@@ -48,10 +46,7 @@ const ContributionCalendar: React.FC<ContributionCalendarProps> = ({ data, loadi
       const d = new Date(week[0]);
       const m = d.getMonth();
       if (m !== lastMonth) {
-        labels.push({
-          label: d.toLocaleString('default', { month: 'short' }),
-          col: wIdx,
-        });
+        labels.push({ label: d.toLocaleString('default', { month: 'short' }), col: wIdx });
         lastMonth = m;
       }
     });
@@ -60,52 +55,70 @@ const ContributionCalendar: React.FC<ContributionCalendarProps> = ({ data, loadi
 
   const getColor = (level: number) => {
     if (colorScheme === 'yellow') {
-      const colors = ['#161b22', '#ffdd44', '#ffc107', '#ff9800', '#e65100'];
+      const colors = ['#1e1e1e', '#6b5900', '#a07d00', '#d4a600', '#fcc200'];
       return colors[Math.min(level, 4)];
     }
     const colors = ['#161b22', '#0e4429', '#196127', '#239a3b', '#2dba4e'];
     return colors[Math.min(level, 4)];
   };
 
+  const CELL = 11; // px
+  const GAP = 2;   // px between cells / columns
+  const DAY_LABEL_WIDTH = 26;
+  const totalWidth = DAY_LABEL_WIDTH + 53 * (CELL + GAP);
+
   if (loading) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '110px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
         Loading heatmap…
       </div>
     );
   }
 
   return (
-    <div className="tuf-calendar-wrapper" style={{ overflowX: 'auto' }}>
-      {/* Month labels row */}
-      <div style={{ display: 'flex', paddingLeft: '28px', marginBottom: '4px' }}>
-        {monthLabels.map(({ label, col }) => (
-          <div
-            key={`${label}-${col}`}
-            style={{
-              position: 'absolute',
-              left: `calc(28px + ${col} * 13px)`,
-              fontSize: '10px',
-              color: 'var(--text-muted)',
-              userSelect: 'none',
-            }}
-          >
-            {label}
+    <div style={{ overflowX: 'auto', overflowY: 'visible', WebkitOverflowScrolling: 'touch' as const }}>
+      <div style={{ width: `${totalWidth}px`, paddingBottom: '2px' }}>
+
+        {/* ── Month labels ── */}
+        <div style={{ position: 'relative', height: '16px', marginLeft: `${DAY_LABEL_WIDTH}px`, marginBottom: '4px' }}>
+          {monthLabels.map(({ label, col }) => (
+            <span
+              key={`${label}-${col}`}
+              style={{
+                position: 'absolute',
+                left: `${col * (CELL + GAP)}px`,
+                fontSize: '10px',
+                color: 'var(--text-muted)',
+                userSelect: 'none' as const,
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {label}
+            </span>
+          ))}
+        </div>
+
+        {/* ── Grid row: day labels + weeks ── */}
+        <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+          {/* Day-of-week labels (Mon / Wed / Fri only) */}
+          <div style={{
+            width: `${DAY_LABEL_WIDTH}px`,
+            flexShrink: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: `${GAP}px`,
+          }}>
+            {['', 'Mon', '', 'Wed', '', 'Fri', ''].map((label, i) => (
+              <div key={i} style={{ height: `${CELL}px`, fontSize: '9px', color: 'var(--text-muted)', lineHeight: `${CELL}px` }}>
+                {label}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div style={{ position: 'relative', paddingTop: '18px' }}>
-        <div className="calendar-grid">
-          {/* Day labels */}
-          <div className="calendar-days-labels" style={{ paddingTop: '2px' }}>
-            <span>Mon</span>
-            <span>Wed</span>
-            <span>Fri</span>
-          </div>
+
           {/* Week columns */}
-          <div className="calendar-weeks-container">
+          <div style={{ display: 'flex', gap: `${GAP}px`, flex: 1 }}>
             {weeks.map((week, wIdx) => (
-              <div key={wIdx} className="calendar-week-column">
+              <div key={wIdx} style={{ display: 'flex', flexDirection: 'column', gap: `${GAP}px` }}>
                 {week.map((dateStr) => {
                   const d = dataMap[dateStr];
                   const level = d ? d.level : 0;
@@ -114,16 +127,16 @@ const ContributionCalendar: React.FC<ContributionCalendarProps> = ({ data, loadi
                     <div
                       key={dateStr}
                       style={{
-                        width: '10px',
-                        height: '10px',
+                        width: `${CELL}px`,
+                        height: `${CELL}px`,
                         borderRadius: '2px',
                         backgroundColor: getColor(level),
-                        margin: '1.5px',
+                        flexShrink: 0,
                         cursor: count > 0 ? 'pointer' : 'default',
-                        transition: 'transform 0.1s',
+                        transition: 'transform 0.1s ease',
                       }}
                       title={`${dateStr}: ${count} submission${count !== 1 ? 's' : ''}`}
-                      onMouseEnter={e => { (e.target as HTMLElement).style.transform = 'scale(1.4)'; }}
+                      onMouseEnter={e => { (e.target as HTMLElement).style.transform = 'scale(1.5)'; }}
                       onMouseLeave={e => { (e.target as HTMLElement).style.transform = 'scale(1)'; }}
                     />
                   );
@@ -132,15 +145,15 @@ const ContributionCalendar: React.FC<ContributionCalendarProps> = ({ data, loadi
             ))}
           </div>
         </div>
-      </div>
-      <div className="calendar-footer" style={{ marginTop: '8px' }}>
-        <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Less</span>
-        <div style={{ display: 'flex', gap: '3px', margin: '0 6px' }}>
+
+        {/* ── Legend ── */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginTop: '8px', gap: '4px' }}>
+          <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>Less</span>
           {[0, 1, 2, 3, 4].map(l => (
-            <div key={l} style={{ width: '10px', height: '10px', borderRadius: '2px', backgroundColor: getColor(l) }} />
+            <div key={l} style={{ width: `${CELL}px`, height: `${CELL}px`, borderRadius: '2px', backgroundColor: getColor(l) }} />
           ))}
+          <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>More</span>
         </div>
-        <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>More</span>
       </div>
     </div>
   );
@@ -181,7 +194,6 @@ const useLeetCodeContributions = (username: string) => {
 
   useEffect(() => {
     setLoading(true);
-    // Use the faisalshohag Vercel API (CORS-friendly, returns submissionCalendar)
     fetch(`https://leetcode-api-faisalshohag.vercel.app/${username}`)
       .then(res => {
         if (!res.ok) throw new Error(`LeetCode API ${res.status}`);
@@ -194,7 +206,6 @@ const useLeetCodeContributions = (username: string) => {
             const date = new Date(parseInt(epoch) * 1000);
             const dateStr = date.toISOString().split('T')[0];
             const c = Number(count);
-            // Normalise to 0-4 levels
             let level = 0;
             if (c >= 10) level = 4;
             else if (c >= 5) level = 3;
