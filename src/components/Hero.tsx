@@ -1,5 +1,7 @@
 import React from 'react';
-import { Mail, FileText } from 'lucide-react';
+import { Mail, FileText, CalendarCheck } from 'lucide-react';
+
+const CAL_LINK = 'https://cal.com/hemric-icflka/letschat?overlayCalendar=true';
 
 const GithubIcon: React.FC<{ size?: number; style?: React.CSSProperties }> = ({ size = 20, style }) => (
   <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
@@ -65,6 +67,16 @@ export const Hero: React.FC = () => {
               <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="hero-social-btn resume-btn" title="View Resume">
                 <FileText size={18} style={{ color: '#ef4444' }} />
                 <span>Resume</span>
+              </a>
+              <a
+                href={CAL_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hero-social-btn hero-book-btn"
+                title="Book a Call"
+              >
+                <CalendarCheck size={18} />
+                <span>Book a Call</span>
               </a>
             </div>
           </div>
