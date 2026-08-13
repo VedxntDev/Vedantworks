@@ -53,7 +53,12 @@ export const Hero: React.FC = () => {
                 <XIcon size={16} style={{ color: '#1da1f2' }} />
                 <span>X</span>
               </a>
-              <a href="mailto:vedantsinghbaghelsocial@gmail.com" target="_blank" rel="noopener noreferrer" className="hero-social-btn" title="Email">
+              <a
+                href="mailto:vedantsinghbaghelsocial@gmail.com"
+                onClick={(e) => { e.preventDefault(); window.location.href = 'mailto:vedantsinghbaghelsocial@gmail.com'; }}
+                className="hero-social-btn"
+                title="Email"
+              >
                 <Mail size={18} style={{ color: '#ea4335' }} />
                 <span>Email</span>
               </a>

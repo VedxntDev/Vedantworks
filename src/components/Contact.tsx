@@ -34,7 +34,14 @@ const LinkedinIcon: React.FC<{ size?: number }> = ({ size = 20 }) => (
   </svg>
 );
 
+const CONTACT_EMAIL = 'vedantsinghbaghelsocial@gmail.com';
+
 export const Contact: React.FC = () => {
+  const handleEmail = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.location.href = `mailto:${CONTACT_EMAIL}`;
+  };
+
   return (
     <section id="contact" className="contact-section">
       <h3 className="section-title">Get In Touch</h3>
@@ -43,7 +50,11 @@ export const Contact: React.FC = () => {
       </p>
 
       <div className="contact-grid">
-        <a href="mailto:vedantsinghbaghelsocial@gmail.com" target="_blank" rel="noopener noreferrer" className="contact-btn">
+        <a
+          href={`mailto:${CONTACT_EMAIL}`}
+          onClick={handleEmail}
+          className="contact-btn"
+        >
           <Mail size={18} />
           <span>Email Me</span>
         </a>
