@@ -819,6 +819,48 @@ section:nth-of-type(4) { animation-delay: 0.4s; }
   color: var(--text-secondary);
 }
 
+/* Book a Call row */
+.contact-book-row {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin-top: 1.4rem;
+  flex-wrap: wrap;
+}
+
+.contact-book-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.62rem 1.25rem;
+  border-radius: 9999px;
+  background: var(--accent-primary);
+  color: #000;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+}
+
+.contact-book-btn:hover {
+  background: #34d399;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 18px rgba(16, 185, 129, 0.35);
+}
+
+.contact-book-btn:active {
+  transform: translateY(0);
+}
+
+.contact-book-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
 
 /* Footer & Spotify Widget */
 .footer {

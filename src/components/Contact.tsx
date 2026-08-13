@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Copy, Check } from 'lucide-react';
+import { Copy, Check, CalendarCheck } from 'lucide-react';
 
 const CONTACT_EMAIL = 'vedantsinghbaghelsocial@gmail.com';
+const CAL_LINK = 'https://cal.com/hemric-icflka/letschat?overlayCalendar=true';
 
 export const Contact: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -13,7 +14,6 @@ export const Contact: React.FC = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // fallback
       const el = document.createElement('textarea');
       el.value = CONTACT_EMAIL;
       document.body.appendChild(el);
@@ -37,7 +37,7 @@ export const Contact: React.FC = () => {
         <h2 className="contact-headline">Let's build something.</h2>
         <p className="contact-subtext">
           Open to internships, full‑stack collaborations, and side projects.
-          <br />Drop a line anytime.
+          <br />Drop a line or book a quick call — anytime.
         </p>
 
         <div className="contact-actions">
@@ -65,6 +65,20 @@ export const Contact: React.FC = () => {
           >
             or open mail app&nbsp;→
           </a>
+        </div>
+
+        {/* Book a Call CTA */}
+        <div className="contact-book-row">
+          <a
+            href={CAL_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="contact-book-btn"
+          >
+            <CalendarCheck size={16} strokeWidth={2} />
+            <span>Book a Call</span>
+          </a>
+          <p className="contact-book-hint">30 min · free · no agenda needed</p>
         </div>
       </div>
     </section>
