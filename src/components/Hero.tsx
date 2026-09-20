@@ -1,5 +1,7 @@
 import React from 'react';
 import { Mail, FileText, CalendarCheck } from 'lucide-react';
+import { TextRevealOnScroll } from './ui/TextRevealOnScroll';
+import { GlowButton } from './ui/GlowButton';
 
 const CAL_LINK = 'https://cal.com/hemric-icflka/letschat?overlayCalendar=true';
 
@@ -37,47 +39,79 @@ export const Hero: React.FC = () => {
             <p style={{ marginBottom: '1.25rem' }}>
               I'm a second-year Computer Science student and <span className="text-gradient">aspiring Full-Stack Developer</span> who enjoys building software, solving complex problems, and learning how modern technologies work together.
             </p>
-            <p style={{ marginBottom: '2rem', fontWeight: 600 }}>
-              <span className="text-gradient">Interested in software development, full-stack engineering, and building scalable tools that solve real problems.</span>
-            </p>
             
-            {/* Social links moved up here */}
+            <div style={{ marginBottom: '2rem' }}>
+              <TextRevealOnScroll 
+                text="Interested in software development, full-stack engineering, and building scalable tools that solve real problems."
+                mode="word"
+                primaryColor="var(--text-primary)"
+                mutedColor="var(--text-muted)"
+                style={{ fontSize: '1.05rem', fontWeight: 600, lineHeight: 1.6 }}
+              />
+            </div>
+            
+            {/* Social links & CTAs using GlowButton */}
             <div className="hero-socials">
-              <a href="https://github.com/VedxntDev" target="_blank" rel="noopener noreferrer" className="hero-social-btn" title="GitHub">
-                <GithubIcon size={18} style={{ color: '#fafafa' }} />
-                <span>GitHub</span>
-              </a>
-              <a href="https://www.linkedin.com/in/vedantsbaghel" target="_blank" rel="noopener noreferrer" className="hero-social-btn" title="LinkedIn">
-                <LinkedinIcon size={18} style={{ color: '#0a66c2' }} />
-                <span>LinkedIn</span>
-              </a>
-              <a href="https://x.com/Vedana16" target="_blank" rel="noopener noreferrer" className="hero-social-btn" title="Twitter/X">
-                <XIcon size={16} style={{ color: '#1da1f2' }} />
-                <span>X</span>
-              </a>
-              <a
-                href="mailto:vedantsinghbaghelsocial@gmail.com"
-                onClick={(e) => { e.preventDefault(); window.location.href = 'mailto:vedantsinghbaghelsocial@gmail.com'; }}
-                className="hero-social-btn"
-                title="Email"
-              >
-                <Mail size={18} style={{ color: '#ea4335' }} />
-                <span>Email</span>
-              </a>
-              <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="hero-social-btn resume-btn" title="View Resume">
-                <FileText size={18} style={{ color: '#ef4444' }} />
-                <span>Resume</span>
-              </a>
-              <a
+              <GlowButton
                 href={CAL_LINK}
                 target="_blank"
-                rel="noopener noreferrer"
-                className="hero-social-btn hero-book-btn"
-                title="Book a Call"
+                variant="glow"
+                glowColor="#10b981"
+                icon={<CalendarCheck size={18} />}
+                className="hero-book-glow-btn"
               >
-                <CalendarCheck size={18} />
-                <span>Book a Call</span>
-              </a>
+                Book a Call
+              </GlowButton>
+
+              <GlowButton
+                href="/resume.pdf"
+                target="_blank"
+                variant="glass"
+                glowColor="#34d399"
+                icon={<FileText size={18} style={{ color: '#ef4444' }} />}
+              >
+                Resume
+              </GlowButton>
+
+              <GlowButton
+                href="https://github.com/VedxntDev"
+                target="_blank"
+                variant="glass"
+                glowColor="#6b7280"
+                icon={<GithubIcon size={18} style={{ color: '#fafafa' }} />}
+              >
+                GitHub
+              </GlowButton>
+
+              <GlowButton
+                href="https://www.linkedin.com/in/vedantsbaghel"
+                target="_blank"
+                variant="glass"
+                glowColor="#0a66c2"
+                icon={<LinkedinIcon size={18} style={{ color: '#0a66c2' }} />}
+              >
+                LinkedIn
+              </GlowButton>
+
+              <GlowButton
+                href="https://x.com/Vedana16"
+                target="_blank"
+                variant="glass"
+                glowColor="#1da1f2"
+                icon={<XIcon size={16} style={{ color: '#1da1f2' }} />}
+              >
+                X
+              </GlowButton>
+
+              <GlowButton
+                href="mailto:vedantsinghbaghelsocial@gmail.com"
+                onClick={(e) => { e.preventDefault(); window.location.href = 'mailto:vedantsinghbaghelsocial@gmail.com'; }}
+                variant="glass"
+                glowColor="#ea4335"
+                icon={<Mail size={18} style={{ color: '#ea4335' }} />}
+              >
+                Email
+              </GlowButton>
             </div>
           </div>
         </div>

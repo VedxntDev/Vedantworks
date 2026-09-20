@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Copy, Check, CalendarCheck } from 'lucide-react';
+import { GlowButton } from './ui/GlowButton';
+import { TextRevealOnScroll } from './ui/TextRevealOnScroll';
 
 const CONTACT_EMAIL = 'vedantsinghbaghelsocial@gmail.com';
 const CAL_LINK = 'https://cal.com/hemric-icflka/letschat?overlayCalendar=true';
@@ -34,7 +36,15 @@ export const Contact: React.FC = () => {
     <section id="contact" className="contact-section contact-minimal">
       <div className="contact-minimal-inner">
         <p className="contact-label">Contact</p>
-        <h2 className="contact-headline">Let's build something.</h2>
+        <h2 className="contact-headline">
+          <TextRevealOnScroll
+            text="Let's build something."
+            mode="word"
+            primaryColor="var(--text-primary)"
+            mutedColor="var(--text-muted)"
+            style={{ fontSize: '2.25rem', fontWeight: 800 }}
+          />
+        </h2>
         <p className="contact-subtext">
           Open to internships, full‑stack collaborations, and side projects.
           <br />Drop a line or book a quick call — anytime.
@@ -67,17 +77,18 @@ export const Contact: React.FC = () => {
           </a>
         </div>
 
-        {/* Book a Call CTA */}
-        <div className="contact-book-row">
-          <a
+        {/* Book a Call CTA using GlowButton */}
+        <div className="contact-book-row" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
+          <GlowButton
             href={CAL_LINK}
             target="_blank"
-            rel="noopener noreferrer"
-            className="contact-book-btn"
+            variant="glow"
+            size="lg"
+            glowColor="#10b981"
+            icon={<CalendarCheck size={18} strokeWidth={2} />}
           >
-            <CalendarCheck size={16} strokeWidth={2} />
-            <span>Book a Call</span>
-          </a>
+            Book a Call
+          </GlowButton>
           <p className="contact-book-hint">30 min · free · no agenda needed</p>
         </div>
       </div>

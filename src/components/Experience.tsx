@@ -1,5 +1,6 @@
 import React from 'react';
 import { Briefcase } from 'lucide-react';
+import { TextRevealOnScroll } from './ui/TextRevealOnScroll';
 
 interface ExperienceItem {
   id: number;
@@ -36,9 +37,15 @@ export const Experience: React.FC = () => {
       <div className="section-grid-line-left"></div>
 
       <h3 className="section-title">Experience</h3>
-      <p className="section-desc">
-        A timeline of my professional journey, showcasing engineering roles and contributions.
-      </p>
+      <div style={{ marginBottom: '1.5rem' }}>
+        <TextRevealOnScroll
+          text="A timeline of my professional journey, showcasing engineering roles and contributions."
+          mode="word"
+          primaryColor="var(--text-secondary)"
+          mutedColor="var(--text-muted)"
+          style={{ fontSize: '0.95rem' }}
+        />
+      </div>
 
       <div className="timeline">
         {experiences.map((exp) => (

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Header } from './components/Header';
+import { NovaGlowNav } from './components/ui/NovaGlowNav';
 import { Hero } from './components/Hero';
 import { Experience } from './components/Experience';
 import { Projects } from './components/Projects';
 import { Stats } from './components/Stats';
 import { Blog } from './components/Blog';
 import { Contact } from './components/Contact';
+import { DotsGrid } from './components/ui/DotsGrid';
+import { Preloader } from './components/ui/Preloader';
 import GridBeams from './components/ui/animated-beams-grid-background';
 
 const GithubIcon: React.FC<{ size?: number }> = ({ size = 20 }) => (
@@ -72,15 +74,32 @@ const App: React.FC = () => {
 
   return (
     <div className="app-container">
+      {/* Framer GlowLoader Preloader Screen */}
+      <Preloader minDisplayTime={1200} />
+
+      {/* Interactive Proximity Dots Grid (Framer Dots_1 component) */}
+      <DotsGrid
+        gridType="dots-lines"
+        dotColor={theme === 'dark' ? 'rgba(52, 211, 153, 0.45)' : 'rgba(16, 185, 129, 0.4)'}
+        dotSize={2.5}
+        spacing={42}
+        proximityRadius={160}
+        maxOpacity={0.85}
+        backgroundOpacity={theme === 'dark' ? 0.08 : 0.05}
+        fadeDelay={500}
+      />
+
       {/* Animated Beams Grid Background (Aceternity UI inspired) */}
       <GridBeams className="animated-beams-bg" beamColor={["#10b981", "#34d399", "#14b8a6"]} />
 
-      <Header 
+      {/* Nova Glow Navigation (Framer Nova Glow Navigation) */}
+      <NovaGlowNav 
         currentTheme={theme} 
         toggleTheme={toggleTheme} 
         activeSection={activeSection} 
         currentView={view}
         onViewChange={setView}
+        logoText="VEDANT"
       />
 
       <main className="content-container">
