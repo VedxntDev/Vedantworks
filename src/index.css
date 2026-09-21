@@ -2,6 +2,15 @@
   Vedant Baghel Portfolio - Premium Design System (Vanilla CSS)
 */
 
+@font-face {
+  font-family: 'Soria';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/soria-bold.woff') format('woff'),
+       url('https://fonts.cdnfonts.com/s/78809/Soria-Bold.woff') format('woff');
+}
+
 :root {
   /* Dark Mode is Default, but we support both */
   --bg-color: #09090b;
@@ -20,6 +29,8 @@
   --spotify-green: #1db954;
   
   --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: 'Soria', Didot, 'Playfair Display', Georgia, serif;
+  --font-display: 'Soria', Didot, 'Playfair Display', Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   
   --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -297,11 +308,12 @@ section:nth-of-type(4) { animation-delay: 0.4s; }
 }
 
 .hero-name {
-  font-size: 2.5rem;
+  font-family: var(--font-serif);
+  font-size: 2.85rem;
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.12;
   margin-bottom: 0.5rem;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.01em;
   color: var(--text-primary);
 }
 
@@ -465,9 +477,10 @@ section:nth-of-type(4) { animation-delay: 0.4s; }
 
 /* Sections General */
 .section-title {
-  font-size: 1.75rem;
+  font-family: var(--font-serif);
+  font-size: 2.15rem;
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
   margin-bottom: 0.75rem;
   color: var(--text-primary);
 }
@@ -666,10 +679,11 @@ section:nth-of-type(4) { animation-delay: 0.4s; }
 }
 
 .project-title {
-  font-size: 1.25rem;
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
   font-weight: 700;
   color: var(--text-primary);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 .project-links {
@@ -1634,10 +1648,10 @@ section:nth-of-type(4) { animation-delay: 0.4s; }
 }
 
 .nova-logo-text {
-  font-family: var(--font-sans);
-  font-weight: 800;
-  font-size: 0.95rem;
-  letter-spacing: 0.02em;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.18rem;
+  letter-spacing: 0.05em;
 }
 
 .nova-logo-dot {
@@ -2075,9 +2089,10 @@ section:nth-of-type(4) { animation-delay: 0.4s; }
 }
 
 .preloader-brand {
-  font-weight: 800;
-  font-size: 0.95rem;
-  letter-spacing: 0.08em;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.12em;
   color: #f4f4f5;
   text-transform: uppercase;
 }
